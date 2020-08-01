@@ -1,11 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Bmi from './components/Bmi';
-import Network from './components/Network';
+
+import { NavigationContainer } from '@react-navigation/native';
+
+import HomeStack from './navigations/HomeStack';
+import BottomTab from './navigations/BottomTab';
 
 export default function App() {
-  return (
-    <Network />
-  );
+    return (
+        <NavigationContainer>
+            <BottomTab />
+        </NavigationContainer>
+    );
 }
