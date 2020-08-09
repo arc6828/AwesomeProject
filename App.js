@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import HomeStack from './navigations/HomeStack';
 import BottomTab from './navigations/BottomTab';
-import MarvelBottomTab from './navigations/MarvelBottomTab';
+import SecondBottomTab from './navigations/SecondBottomTab';
 
 import { createStackNavigator } from '@react-navigation/stack';
 const RootStack = createStackNavigator();
@@ -18,6 +18,12 @@ export default function App() {
                     name="BottomTab" 
                     component={BottomTab} 
                     options={{  title: 'Main' , headerShown: false   }} 
+                    />
+
+                <RootStack.Screen 
+                    name="SecondBottomTab" 
+                    component={SecondBottomTab} 
+                    options={{  title: 'Second Tab'   }} 
                     />
                 
                 

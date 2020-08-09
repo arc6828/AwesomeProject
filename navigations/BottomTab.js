@@ -6,7 +6,6 @@ import CatScreen from '../screens/CatScreen';
 
 import HomeStack from '../navigations/HomeStack';
 import FlexStack from '../navigations/FlexStack';
-import MarvelBottomTab from '../navigations/MarvelBottomTab';
 
 import { Ionicons } from '@expo/vector-icons';
 
