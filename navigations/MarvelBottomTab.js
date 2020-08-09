@@ -6,7 +6,6 @@ import CatScreen from '../screens/CatScreen';
 
 import HomeStack from '../navigations/HomeStack';
 import FlexStack from '../navigations/FlexStack';
-import MarvelBottomTab from '../navigations/MarvelBottomTab';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -14,7 +13,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomTab() {
+export default function MarvelBottomTab() {
 
     return (
         <Tab.Navigator
@@ -49,12 +48,6 @@ export default function BottomTab() {
                 inactiveTintColor: 'gray',
             }}
             >
-            <Tab.Screen 
-                name="HomeStack" 
-                component={HomeStack} 
-                options={{  title: 'Home'  }} 
-                
-                />
             
             <Tab.Screen 
                 name="AntScreen" 
@@ -72,11 +65,7 @@ export default function BottomTab() {
                 component={CatScreen} 
                 options={{  title: 'Cat'  }} 
                 />  
-            <Tab.Screen 
-                name="FlexStack" 
-                component={FlexStack} 
-                options={{  title: 'Flex'  }} 
-                />  
+            
         </Tab.Navigator>            
     );
 }

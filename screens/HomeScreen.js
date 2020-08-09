@@ -22,7 +22,8 @@ export default function HomeScreen({ navigation }) {
                     title="Next"
                     color=""
                     />
-            </View>            
+            </View>          
+              
         </View>
     );
 }

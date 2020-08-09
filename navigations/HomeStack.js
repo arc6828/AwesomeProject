@@ -20,7 +20,7 @@ export default function HomeStack() {
             <Stack.Screen 
                 name="BmiScreen" 
                 component={BmiScreen} 
-                options={{  title: 'Bmi Network Title'  }} 
+                options={{  title: 'Bmi Title'  }} 
                 />
             <Stack.Screen 
                 name="NetworkScreen" 
