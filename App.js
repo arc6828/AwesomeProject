@@ -3,8 +3,11 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 import HomeStack from './navigations/HomeStack';
+
+
 import BottomTab from './navigations/BottomTab';
 import SecondBottomTab from './navigations/SecondBottomTab';
+import MidtermTab from './navigations/MidtermTab';
 
 import { createStackNavigator } from '@react-navigation/stack';
 const RootStack = createStackNavigator();
@@ -24,6 +27,12 @@ export default function App() {
                     name="SecondBottomTab" 
                     component={SecondBottomTab} 
                     options={{  title: 'Second Tab'   }} 
+                    />
+
+                <RootStack.Screen 
+                    name="MidtermTab" 
+                    component={MidtermTab} 
+                    options={{  title: 'Midterm Tab'   }} 
                     />
                 
                 
