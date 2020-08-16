@@ -33,7 +33,7 @@ export default function HomeStack() {
             <Stack.Screen 
                 name="MidtermFirstScreen" 
                 component={MidtermFirstScreen} 
-                options={{ title: 'Network Screen Title' }} 
+                options={{ title: 'Midterm First Screen Title' }} 
                 />
             
         </Stack.Navigator>

@@ -3,9 +3,9 @@ import { View, Text, Button, TouchableOpacity, TextInput } from 'react-native';
 import { white } from 'ansi-colors';
 
 export default function MidtermFirstScreen({ navigation }) {
-    const [name , setName] = useState('');
-    const [display_name , setDisplayName] = useState('');
-    const [length , setLength] = useState('0');
+    const [name , setName] = useState('Test');
+    const [display_name , setDisplayName] = useState('Test');
+    const [length , setLength] = useState('4');
 
     //console.log("STATE : ", weight, height, bmi);
 
@@ -23,11 +23,12 @@ export default function MidtermFirstScreen({ navigation }) {
                 <Text>{length} Characters</Text>
             </View>
             <View style={{ flex : 5 , backgroundColor : "#cccccc" , padding : 50}}>
+                <Text style={{ paddingVertical : 20 , fontSize : 20}}>Your name</Text>
                 <TextInput 
                     placeholder="enter your name ..."     
                     onChangeText={ (text) => setName(text) }
                     value={name} 
-                    style={{ marginBottom : 40, backgroundColor : "white" , padding : 20 }} 
+                    style={{ marginBottom : 100, backgroundColor : "white" , padding : 20 }} 
                     />
                 <Button title="Save" onPress={compute} />
             </View>

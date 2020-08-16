@@ -20,7 +20,7 @@ export default function HomeScreen({ navigation }) {
                 </TouchableOpacity>
 
                 <TouchableOpacity  onPress={() => navigation.navigate('MidtermFirstScreen') } >                    
-                    <Text style={{ padding : 10 }}>Go to Midterm Firest Screen</Text>
+                    <Text style={{ padding : 10 }}>Go to Midterm First Screen</Text>
                 </TouchableOpacity>
                 
                 <TouchableOpacity  onPress={() => navigation.navigate('MidtermTab') } >                    
