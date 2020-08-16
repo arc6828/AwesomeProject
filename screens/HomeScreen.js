@@ -26,6 +26,10 @@ export default function HomeScreen({ navigation }) {
                 <TouchableOpacity  onPress={() => navigation.navigate('MidtermTab') } >                    
                     <Text style={{ padding : 10 }}>Go to MidtermTab</Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity  onPress={() => navigation.navigate('TodoTab') } >                    
+                    <Text style={{ padding : 10 }}>To-do List</Text>
+                </TouchableOpacity>
             </View>
             <View>                
                 <Button  

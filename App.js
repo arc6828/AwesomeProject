@@ -8,6 +8,7 @@ import HomeStack from './navigations/HomeStack';
 import BottomTab from './navigations/BottomTab';
 import SecondBottomTab from './navigations/SecondBottomTab';
 import MidtermTab from './navigations/MidtermTab';
+import TodoTab from './navigations/TodoTab';
 
 import { createStackNavigator } from '@react-navigation/stack';
 const RootStack = createStackNavigator();
@@ -33,6 +34,12 @@ export default function App() {
                     name="MidtermTab" 
                     component={MidtermTab} 
                     options={{  title: 'Midterm Tab'   }} 
+                    />
+
+                <RootStack.Screen 
+                    name="TodoTab" 
+                    component={TodoTab} 
+                    options={{  title: 'Todo Tab'   }} 
                     />
                 
                 
