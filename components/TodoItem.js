@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, TextInput, TouchableOpacity } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -10,35 +9,25 @@ export default function TodoItem(props) {
      
         <View
             style={{
-                flex: 1,
-                width: '100%',
                 flexDirection: 'row',
                 alignItems: 'center',
-                paddingRight: 10,
-                paddingVertical: 5,
+                paddingHorizontal : 25,
+                paddingVertical : 10,
             }}>
             <TouchableOpacity
                 onPress={()=>props.onCheck(props.item._id) }
-                style={{ paddingLeft: 25, paddingRight: 15 }}>
+                style={{  flex : 2 }}>
+
+                {/* <Ionicons name="md-square-outline" size={23} /> */}
 
                 <Ionicons 
                     name={ props.item.completed ? "md-checkbox" : "md-square-outline" }
                     size={23} />
-
-                
-                
-                
                 
             </TouchableOpacity>
-            <View
-                style={{
-                flex: 1,
-                paddingLeft: 25,
-                }}>                  
-                
+            <View style={{ flex: 12 }}>                                  
                 <TextInput
-                    style={{ width: '90%' }}
-                    // placeholder="What needs to be done?"
+                    placeholder="What's in your mind? "
                     // autoFocus
                     // underLineColorAndroid="transparent"
                     // underlineColor="transparent"
@@ -51,8 +40,8 @@ export default function TodoItem(props) {
                 
             </View>
             <TouchableOpacity
-                onPress={() => props.onDelete(props.item._id)}
-                style={{ paddingLeft: 25, paddingRight: 15 }} >
+                // onPress={() => props.onDelete(props.item._id)}
+                style={{  flex : 1 }} >
                 <Ionicons name="md-trash" size={23} />
             </TouchableOpacity>
         </View>

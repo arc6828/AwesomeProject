@@ -23,13 +23,13 @@ export default function TodoTab() {
                     let iconName;
                     switch(route.name){
                         case "TodoScreen" :
-                            iconName = 'md-home';
+                            iconName = 'md-list';
                             break;
                         case "ProfileScreen" : 
-                            iconName = 'md-bug';
+                            iconName = 'md-person';
                             break;
                         case "SettingScreen" : 
-                            iconName = 'logo-twitter';
+                            iconName = 'md-settings';
                             break; 
                     }
                     

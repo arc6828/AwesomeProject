@@ -1,8 +1,6 @@
 import React, { useState, useEffect  } from 'react';
-import { View, Text, Button, TouchableOpacity  } from 'react-native';
-import { ScrollView, FlatList } from 'react-native';
+import { View, FlatList, TouchableOpacity  } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { white } from 'ansi-colors';
 
 import TodoItem  from '../components/TodoItem';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -20,7 +18,7 @@ export default function TodoScreen({ navigation }) {
     useEffect(() => {
         console.log(todos);   
         console.log("STATE UPDATED!!");        
-        readTodos("@todos");
+        readTodos();
     },[]);
 
     
@@ -63,6 +61,7 @@ export default function TodoScreen({ navigation }) {
         //CLONE ARRAY FIRST
         let t = [...todos];
         let index = t.findIndex((item => item._id == _id));
+        //SET INVERSE VALUE BOOLEAN
         t[index].completed = ! t[index].completed;
         setTodos(t);
 
@@ -89,9 +88,9 @@ export default function TodoScreen({ navigation }) {
         }
     }
 
-    const readTodos = async (key) => {
+    const readTodos = async () => {
         try {
-            const string_value = await AsyncStorage.getItem(key)
+            const string_value = await AsyncStorage.getItem("@todos")
             let todos = string_value != null ? JSON.parse(string_value) : [];
             setTodos(todos);
         } catch(e) {
@@ -105,7 +104,7 @@ export default function TodoScreen({ navigation }) {
         <View style={{ flex : 1 }}>
             
             <FlatList 
-                style={{ width: '100%', top: 15 }}
+                style={{ marginTop : 15 }}
                 data={todos}
                 keyExtractor={item => item._id}
                 renderItem={ ({ item }) => {
@@ -143,4 +142,46 @@ export default function TodoScreen({ navigation }) {
         </View>
 
     );
+
+    const storeDataString = async (value) => {
+        try {
+            await AsyncStorage.setItem('@storage_Key', value)
+        } catch (e) {
+            // saving error
+        }
+    }
+
+    const storeDataObject = async (value) => {
+        try {
+            const jsonValue = JSON.stringify(value)
+            await AsyncStorage.setItem('@storage_Key', jsonValue)
+        } catch (e) {
+            // saving error
+        }
+    }
+
+    
+    const getDataString = async () => {
+        try {
+            const value = await AsyncStorage.getItem('@storage_Key')
+            let new_value = value !== null ? value : "";
+            //SET STATE HERE
+        } catch(e) {
+            // error reading value
+        }
+    }
+    
+    const getDataObject = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('@storage_Key')
+            let new_value =  jsonValue != null ? JSON.parse(jsonValue) : [] ;
+            //SET STATE HERE
+        } catch(e) {
+            // error reading value
+        }
+    }
+    
+    
+
+
 }
