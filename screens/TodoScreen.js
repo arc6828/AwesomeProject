@@ -1,24 +1,28 @@
 import React, { useState, useEffect  } from 'react';
-import { View, FlatList, TouchableOpacity  } from 'react-native';
+import { View, FlatList, TouchableOpacity, YellowBox  } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import TodoItem  from '../components/TodoItem';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import { fb } from '../db_config';
+
 export default function TodoScreen({ navigation }) {
     const [todos , setTodos] = useState(
         [
-            { _id : '1' , completed : false,  title : "exercise @ 7.00" },
-            { _id : '2' , completed : false,  title : "meeting @ 9.00"},
-            { _id : '3' , completed : false,  title : "go to cinema @ 19.00"},
+            // { _id : '1' , completed : false,  title : "exercise @ 7.00" },
+            // { _id : '2' , completed : false,  title : "meeting @ 9.00"},
+            // { _id : '3' , completed : false,  title : "go to cinema @ 19.00"},
         ]     
     );
 
     //console.log("STATE : ", weight, height, bmi);
     useEffect(() => {
-        console.log(todos);   
-        console.log("STATE UPDATED!!");        
-        readTodos();
+        //console.log(todos);   
+        //console.log("STATE UPDATED!!");        
+        //readTodos();
+        readTodosFirebase();
+        YellowBox.ignoreWarnings(['Setting a timer']);
     },[]);
 
     
@@ -41,6 +45,9 @@ export default function TodoScreen({ navigation }) {
 
         //ASYNC STORAGE
         writeTodos(t);
+
+        //UPDATE FIRESTORE
+        writeTodosFirebase(new_data);
         
     };
 
@@ -55,7 +62,11 @@ export default function TodoScreen({ navigation }) {
         setTodos(t);
 
         //ASYNC STORAGE
-        writeTodos(t);
+        writeTodos(t);        
+
+        //UPDATE FIRESTORE
+        let new_data = t[index];
+        writeTodosFirebase(new_data);
     }; 
     const onCheck = (_id) => {   
         //CLONE ARRAY FIRST
@@ -67,16 +78,26 @@ export default function TodoScreen({ navigation }) {
 
         //ASYNC STORAGE
         writeTodos(t);
+        
+        //UPDATE FIRESTORE
+        let new_data = t[index];
+        writeTodosFirebase(new_data);
     };
     const onDelete = (_id) => {   
         //CLONE ARRAY FIRST
         let t = [...todos];
         let index = t.findIndex((item => item._id == _id));
-        t.splice(index, 1);
+        let removed_item = t.splice(index, 1);
         setTodos(t);
 
         //ASYNC STORAGE
         writeTodos(t);
+
+        
+        //UPDATE FIRESTORE
+        let new_data = removed_item[0];
+        //console.log("Removed : ", new_data);
+        removeTodosFirebase(new_data);
     };
 
     const writeTodos = async (object_value) => {
@@ -97,6 +118,56 @@ export default function TodoScreen({ navigation }) {
             // error reading value
         }
     }
+
+    const removeTodosFirebase = async (new_data) => {
+        fb.firestore().collection("todos")
+            .doc(new_data._id)
+            .delete()
+            .then(function() {
+                console.log("Firestore successfully deleted!");
+            })
+            .catch(function(error) {
+                console.error("Error writing document: ", error);
+            });
+    
+      
+    }
+
+    const writeTodosFirebase = async (new_data) => {
+        fb.firestore().collection("todos")
+            .doc(new_data._id)
+            .set(new_data)
+            .then(function() {
+                console.log("Firestore successfully written!");
+            })
+            .catch(function(error) {
+                console.error("Error writing document: ", error);
+            });
+    
+      
+    }
+
+    const readTodosFirebase = async () => {
+        fb.firestore().collection("todos").get().then((querySnapshot) => {
+            //console.log("Query : " , querySnapshot.data());
+            const todos = querySnapshot.docs.map(doc => doc.data());
+            //console.log("Todos Firebase : " , todos); // array of todos objects
+
+            setTodos(todos);
+            writeTodos(todos);
+            
+            /*
+            readTodos();
+            this.setState({"todos":data});
+            //SAVE TO LOCAL STORAGE
+            this._storeData();    
+            */    
+        });
+      
+      
+    }
+
+
      
      
 

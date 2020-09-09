@@ -40,7 +40,7 @@ export default function TodoItem(props) {
                 
             </View>
             <TouchableOpacity
-                // onPress={() => props.onDelete(props.item._id)}
+                onPress={() => props.onDelete(props.item._id)}
                 style={{  flex : 1 }} >
                 <Ionicons name="md-trash" size={23} />
             </TouchableOpacity>

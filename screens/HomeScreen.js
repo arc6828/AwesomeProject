@@ -2,9 +2,21 @@ import * as React from 'react';
 import { View, Text, Button, TouchableOpacity } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
-
+import { fb } from '../db_config';
 
 export default function HomeScreen({ navigation }) {
+
+    const onLogout = () => {
+        fb.auth().signOut().then(function() {
+          console.log("Logout successfully");
+          // Sign-out successful.
+        }).catch(function(error) {
+          // An error happened.
+          console.log(error);
+        });
+      
+    };
+      
     
 
     return (
@@ -29,6 +41,9 @@ export default function HomeScreen({ navigation }) {
 
                 <TouchableOpacity  onPress={() => navigation.navigate('TodoTab') } >                    
                     <Text style={{ padding : 10 }}>To-do List</Text>
+                </TouchableOpacity>
+                <TouchableOpacity  onPress={onLogout} >                    
+                    <Text style={{ padding : 10 }}>Log out</Text>
                 </TouchableOpacity>
             </View>
             <View>                
