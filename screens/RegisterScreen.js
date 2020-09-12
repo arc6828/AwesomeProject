@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState } from 'react';
 import { View, Text, Button , TextInput, TouchableOpacity} from 'react-native';
 
 import { fb } from '../db_config';
@@ -9,10 +9,7 @@ export default function RegisterScreen( {navigation} ) {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
 
-    useEffect(() => {
-        
-
-    },[]);
+     
 
     const onRegister = () => {
         // TODO: Firebase stuff...
@@ -20,9 +17,7 @@ export default function RegisterScreen( {navigation} ) {
         //const { email, password } = this.state
         fb.auth()
             .createUserWithEmailAndPassword(email,password)
-            .then(() => {
-
-            })
+            .then(() => {  console.log("Register Successfully"); })
             .catch(error => {
                 //this.setState({ errorMessage: error.message })
             })

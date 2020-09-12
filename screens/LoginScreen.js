@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState } from 'react';
 import { View, Text, Button , TextInput, TouchableOpacity} from 'react-native';
 
 import { fb } from '../db_config';
@@ -17,10 +17,7 @@ export default function LoginScreen( {navigation, route} ) {
         
         fb.auth()
             .signInWithEmailAndPassword(email, password)
-            .then(() => {
-                
-
-            })
+            .then(() => { console.log("Login Successfully");  })
             .catch(error => {
                 //this.setState({ errorMessage: error.message })
             })

@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect, useContext  } from 'react';
 import { View, FlatList, TouchableOpacity, YellowBox  } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -6,6 +6,7 @@ import TodoItem  from '../components/TodoItem';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { fb } from '../db_config';
+import { AuthContext, AuthContextProvider } from "../hooks/AuthContext";
 
 export default function TodoScreen({ navigation }) {
     const [todos , setTodos] = useState(
@@ -15,6 +16,7 @@ export default function TodoScreen({ navigation }) {
             // { _id : '3' , completed : false,  title : "go to cinema @ 19.00"},
         ]     
     );
+    const [user, setUser] = useContext(AuthContext);
 
     //console.log("STATE : ", weight, height, bmi);
     useEffect(() => {
@@ -32,6 +34,7 @@ export default function TodoScreen({ navigation }) {
             _id : '_' + Math.random().toString(36).substr(2, 9), //RANDOM NUMBER
             title : "", //Empty String
             completed : false,
+            user_id : user.uid, 
         };
 
         //CLONE ARRAY
@@ -119,6 +122,26 @@ export default function TodoScreen({ navigation }) {
         }
     }
 
+    const readTodosFirebase = async () => {
+        //console.log("user in Screen" , user)
+        fb.firestore().collection("todos")
+            .where("user_id", "==", user.uid)
+            //.onSnapshot((querySnapshot) => {
+            .get().then((querySnapshot) => {
+                //console.log("Query : " , querySnapshot.data());
+                const todos = querySnapshot.docs.map(doc => doc.data());
+                
+                //WRITE TO ASYNC STORAGE
+                writeTodos(todos);
+
+                //SET STATE
+                setTodos(todos);            
+                
+            });
+      
+      
+    }
+
     const removeTodosFirebase = async (new_data) => {
         fb.firestore().collection("todos")
             .doc(new_data._id)
@@ -147,25 +170,7 @@ export default function TodoScreen({ navigation }) {
       
     }
 
-    const readTodosFirebase = async () => {
-        fb.firestore().collection("todos").get().then((querySnapshot) => {
-            //console.log("Query : " , querySnapshot.data());
-            const todos = querySnapshot.docs.map(doc => doc.data());
-            //console.log("Todos Firebase : " , todos); // array of todos objects
-
-            setTodos(todos);
-            writeTodos(todos);
-            
-            /*
-            readTodos();
-            this.setState({"todos":data});
-            //SAVE TO LOCAL STORAGE
-            this._storeData();    
-            */    
-        });
-      
-      
-    }
+    
 
 
      
