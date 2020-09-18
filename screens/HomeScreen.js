@@ -48,6 +48,9 @@ export default function HomeScreen({ navigation }) {
                 <TouchableOpacity  onPress={() => navigation.navigate('TodoTab') } >                    
                     <Text style={{ padding : 10 }}>To-do List</Text>
                 </TouchableOpacity>
+                <TouchableOpacity  onPress={() => navigation.navigate('MapTab') } >                    
+                    <Text style={{ padding : 10 }}>Location and Map</Text>
+                </TouchableOpacity>
                 <TouchableOpacity  onPress={onLogout} >                    
                     <Text style={{ padding : 10 }}>Log out</Text>
                 </TouchableOpacity>
