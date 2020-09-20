@@ -1,9 +1,5 @@
 import * as React from 'react';
 
-
-
-import { View, Text, Button , Image} from 'react-native';
-
 import { Ionicons } from '@expo/vector-icons';
 
 import MapDriverScreen from '../screens/MapDriverScreen';

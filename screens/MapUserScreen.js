@@ -3,66 +3,66 @@ import { View, Text, Button, TouchableOpacity, Dimensions, YellowBox   } from 'r
 
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
+import { fb } from '../db_config';
 
 export default function MapUserScreen({ navigation }) {
-    const [location, setLocation] = useState(null);
-    const [markerLocation, setMarkerLocation] = useState({
-        latitude: 0, 
-        longitude: 0
-    });
-    const [region, setRegion] = useState({
-        latitude: 0,
-        longitude: 0,
-        latitudeDelta: 0.003,
-        longitudeDelta: 0.003,
-    });
+    const [markers, setMarkers] = useState([]);    
 
-    useEffect(() => {        
-        //GET DRIVER LOCATION FROM FIREBASE 
-        //WHEN GET LOCATION USE setLocation, setRegion AND setMarkerLocation
-        //TO DRAW MARKER ON MAP
-        
-
+    useEffect(() => {
+        readDriverLocationFirebase();
         
     },[]);
 
+    const readDriverLocationFirebase = async () => {
+        console.log("user in Screen")
+        fb.firestore().collection("driver_locations")
+            //.where("user_id", "==", user.uid)
+            .onSnapshot((querySnapshot) => {
+            //.get().then((querySnapshot) => {
+                
+                const markers = querySnapshot.docs.map(doc => doc.data());
+                
+                console.log("MARKERS : " , markers);
+
+                //SET STATE
+                setMarkers(markers);            
+                
+            });
+      
+      
+    }
+
     return (
         <View style={{ flex: 1, flexDirection : 'column' }}>
-            <View style={{flexDirection : 'row', height : 50 , backgroundColor : "#50E3C2"}}>
-                <View style={{ flex : 1, flexDirection : 'column' }}>
-                    <Text style={{ textAlign : 'center'}}>Latitude</Text>
-                    <Text style={{ textAlign : 'center'}}>
-                        { location ? location.coords.latitude : "-" }
-                    </Text>                    
-                </View>
-                <View style={{ flex : 1, flexDirection : 'column' }}>
-                    <Text style={{ textAlign : 'center'}}>Longitude</Text>
-                    <Text style={{ textAlign : 'center'}}>
-                        { location ? location.coords.longitude : "-" }
-                    </Text> 
-                </View>
-                <View style={{ flex : 1, flexDirection : 'column' }}>
-                    <Text style={{ textAlign : 'center'}}>Speed</Text>
-                    <Text style={{ textAlign : 'center'}}>
-                        { location ? Number(location.coords.speed).toFixed(0) : "-" } km/h
-                    </Text> 
-                </View>
-            </View>
             <View style={{ flex: 1 }}>
-                <MapView 
-                    style={{
-                        width: Dimensions.get('window').width,
-                        height: Dimensions.get('window').height,
-                    }} 
-                    region={region}
-                    onRegionChangeComplete={(region) => setRegion(region)}
-                >
-                    <Marker
-                        coordinate={markerLocation}
-                        //title={marker.title}
-                        //description={marker.description}
-                        />
-                </MapView>
+                {(() => {
+                    //IF LOCATION NOT NULL
+                    if(markers.length > 0){
+                        return (
+                        <MapView 
+                            style={{
+                                width: Dimensions.get('window').width,
+                                height: Dimensions.get('window').height,
+                            }}                     
+                            initialRegion={{
+                                latitude: markers[0].coords.latitude,
+                                longitude: markers[0].coords.longitude,
+                                latitudeDelta: 0.005,
+                                longitudeDelta: 0.005,
+                            }}                            
+                            >                            
+                            {markers.map(marker => (
+                                <Marker
+                                coordinate={marker.coords}
+                                title={marker.user_id}
+                                key={marker.user_id}
+                                //description={marker.description}
+                                />
+                            ))}
+                        </MapView>
+                        );
+                    }
+                })()}
             </View>
 
         </View>

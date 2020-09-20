@@ -5,6 +5,7 @@ import SecondBottomTab from './navigations/SecondBottomTab';
 import MidtermTab from './navigations/MidtermTab';
 import TodoTab from './navigations/TodoTab';
 import MapTab from './navigations/MapTab';
+import MapUserScreen from './screens/MapUserScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -70,6 +71,11 @@ export default function MainNavigation() {
                             name="MapTab" 
                             component={MapTab} 
                             options={{  title: 'Location and Map'   }} 
+                            />
+                        <RootStack.Screen 
+                            name="MapUserScreen" 
+                            component={MapUserScreen} 
+                            options={{  title: 'MapUser'   }} 
                             />
                     </RootStack.Navigator>                
                 

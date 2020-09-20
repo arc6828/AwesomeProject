@@ -26,7 +26,7 @@ export default function HomeScreen({ navigation }) {
             <View style={{ flex : 1 , alignItems: 'center', justifyContent: 'center' }}>                
                 <View style={{ flexDirection : 'row' , padding : 30}}>
                     <Text>Welcome, </Text>
-                    <Text style={{ color : "red"}}>{user.email}</Text>
+                    <Text style={{ color : "red"}}>{user?user.email:""}</Text>
                 </View>
                 <Ionicons name="md-home" size={50} color="#848484" />
                 <Text style={{ fontSize : 20 }}>Home Screen</Text>
@@ -50,6 +50,9 @@ export default function HomeScreen({ navigation }) {
                 </TouchableOpacity>
                 <TouchableOpacity  onPress={() => navigation.navigate('MapTab') } >                    
                     <Text style={{ padding : 10 }}>Location and Map</Text>
+                </TouchableOpacity>
+                <TouchableOpacity  onPress={() => navigation.navigate('MapUserScreen') } >                    
+                    <Text style={{ padding : 10 }}>User</Text>
                 </TouchableOpacity>
                 <TouchableOpacity  onPress={onLogout} >                    
                     <Text style={{ padding : 10 }}>Log out</Text>
