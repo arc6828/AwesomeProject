@@ -26,9 +26,12 @@ export default function MapDriverScreen({ navigation }) {
             let current_location = await Location.getCurrentPositionAsync({});
             //IF CURRENT LOCATION DETECTED
             if(current_location){
+                console.log("Start : ");  
                 //console.log("Location : ", current_location);              
                 //SET STATE
-                setLocation(current_location);                 
+                setLocation(current_location);           
+                //current_location.user_id = user.uid;
+                //writeDriverLocationFirebase(current_location);      
             }
         })();   
         
@@ -138,15 +141,19 @@ export default function MapDriverScreen({ navigation }) {
                                 if(event.nativeEvent.coordinate){
                                     let new_location = {
                                         coords : event.nativeEvent.coordinate,
-                                        mocked : event.nativeEvent.coordinate.isFromMockProvider,
+                                        //mocked : event.nativeEvent.coordinate.isFromMockProvider,
+                                        mocked : false,
                                         timestamp : event.nativeEvent.coordinate.timestamp,
                                         user_id : user.uid,
                                     };
+                                    
                                     setLocation(new_location);
                                     //console.log("LOCATION : " , new_location)
 
                                     //SET WRITE TO FIREBASE
+                                    //console.log("Before Write to Firebase", new_location);
                                     writeDriverLocationFirebase(new_location);
+                                    
                                 }
                                 
                             }}
