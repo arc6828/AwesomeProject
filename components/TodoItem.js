@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, TextInput, TouchableOpacity } from 'react-native';
+import { View, TextInput, TouchableOpacity, Image, Modal } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
-
 export default function TodoItem(props) {     
 
     return (
@@ -39,6 +38,29 @@ export default function TodoItem(props) {
                 />                  
                 
             </View>
+            <TouchableOpacity                
+                style={{  flex : 3, alignItems : 'center' }} 
+                onPress={() => {
+                    console.log("Pressed");
+                    let images = [
+                        {
+                            // Simplest usage.
+                            url: props.item.title,
+                        
+                            // width: number
+                            // height: number
+                            // Optional, if you know the image size, you can set the optimization performance
+                        
+                            // You can pass props to <Image />.
+                            props: { }
+                        }
+                    ];
+                    props.setImages(images);
+                    props.setModalVisible(true);
+                }}
+                >
+                <Image source={{ uri : props.item.title }} style={{width: 40, height: 40}} resizeMode="cover" />
+            </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => props.onDelete(props.item._id)}
                 style={{  flex : 1 }} >

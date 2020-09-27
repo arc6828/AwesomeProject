@@ -3,6 +3,7 @@ import * as React from 'react';
 import BmiScreen from '../screens/BmiScreen';
 import NetworkScreen from '../screens/NetworkScreen';
 import HomeScreen from '../screens/HomeScreen';
+import UploadFileScreen from '../screens/UploadFileScreen';
 
 import MidtermFirstScreen from '../screens/MidtermFirstScreen';
 
@@ -34,6 +35,12 @@ export default function HomeStack() {
                 name="MidtermFirstScreen" 
                 component={MidtermFirstScreen} 
                 options={{ title: 'Midterm First Screen Title' }} 
+                />
+
+            <Stack.Screen 
+                name="UploadFileScreen" 
+                component={UploadFileScreen} 
+                options={{ title: 'Upload File' }} 
                 />
             
         </Stack.Navigator>

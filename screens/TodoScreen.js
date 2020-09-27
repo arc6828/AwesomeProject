@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useContext  } from 'react';
-import { View, FlatList, TouchableOpacity, YellowBox  } from 'react-native';
+import { View, FlatList, TouchableOpacity, YellowBox ,Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+import ImageViewer from 'react-native-image-zoom-viewer';
+import * as FileSystem from 'expo-file-system';
+import * as MediaLibrary from 'expo-media-library';
 import TodoItem  from '../components/TodoItem';
+
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { fb } from '../db_config';
@@ -17,6 +21,9 @@ export default function TodoScreen({ navigation }) {
         ]     
     );
     const [user, setUser] = useContext(AuthContext);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [images, setImages] = useState([]);
+
 
     //console.log("STATE : ", weight, height, bmi);
     useEffect(() => {
@@ -191,6 +198,8 @@ export default function TodoScreen({ navigation }) {
                                 onUpdate={onUpdate}
                                 onCheck={onCheck}
                                 onDelete={onDelete}
+                                setImages={setImages}
+                                setModalVisible={setModalVisible}
                                 />
                         );
                     }      
@@ -215,6 +224,47 @@ export default function TodoScreen({ navigation }) {
 
                 <Ionicons name='md-add' size={26} />
             </TouchableOpacity>
+            <Modal 
+                visible={modalVisible} 
+                transparent={true}
+                onRequestClose={() => {
+                    setModalVisible(false);
+                }}
+                >
+                <ImageViewer 
+                    enableSwipeDown={true}
+                    onCancel={()=>{
+                        console.log("SwipeDown");
+                        setModalVisible(false);
+                    }}
+                    onSave={(uri)=>{
+                        console.log("TEXT : " ,uri);
+                        //SPLIT STRING WITH "/" => ["file:",...,"ImagePicker","df2bbd81-da8c-4e3d-aa26-4b71686ea623.jpg"]
+                        //GET LAST ITEM IN ARRAY BY POP()
+                        //REMOVE ?xxxxxxx after filename
+                        //REMOVE %
+                        let filename = uri.split('/').pop().split('?')[0].replace("%","");
+                        (async () => {             
+                            try{
+                                const response = await FileSystem.downloadAsync(
+                                    uri,
+                                    FileSystem.documentDirectory + filename
+                                );
+                                console.log("response : ", response);
+                                //await saveToLibraryAsync(localUri);
+                                const asset = await MediaLibrary.createAssetAsync(response.uri)
+                                await MediaLibrary.createAlbumAsync("Downloads", asset, false)
+                            }catch(error){
+                                console.error(error);
+                            }
+                            
+                        })();
+
+                        
+                    }}
+                    imageUrls={images}
+                    />
+            </Modal>
         </View>
 
     );
