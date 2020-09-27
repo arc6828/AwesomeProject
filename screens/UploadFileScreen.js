@@ -59,8 +59,8 @@ export default function UploadFileScreen({ navigation }) {
         const blob = await response.blob();
         
         //UPLOAD TO FIREBASE
-        // Create a reference to 'uploads/xxxxxxx.jpg'
-        let ref = fb.storage().ref().child("uploads/"+result.filename);
+        // Create a reference to 'xxxxxxx.jpg'
+        let ref = fb.storage().ref().child(result.filename);
         ref.put(blob)
             .then((snapshot)=>{
                 console.log("Success : ");
@@ -82,6 +82,7 @@ export default function UploadFileScreen({ navigation }) {
             title : url, //Empty String
             completed : false,
             user_id : user.uid, 
+            image_url : url, 
         };
 
         //UPDATE FIRESTORE
@@ -152,7 +153,7 @@ export default function UploadFileScreen({ navigation }) {
                     
             
                 </TouchableOpacity>
-                </Modal>
+            </Modal>
             <TouchableOpacity 
                 style={{ margin : 10, alignItems : 'center'}} 
                 onPress={() => { setModalVisible(!modalVisible); }}
