@@ -128,7 +128,8 @@ export default function UploadFileScreen({ navigation }) {
                         <TouchableOpacity 
                             style={{ padding  : 15 }}
                             onPress={() => { 
-                                pickImage("camera");
+                                //pickImage("camera");
+                                setTimeout(async function(){  await pickImage("camera"); }, 100);
                                 setModalVisible(false); 
                             }}   
                             >                            
@@ -137,7 +138,8 @@ export default function UploadFileScreen({ navigation }) {
                         <TouchableOpacity 
                             style={{ padding : 15 }}  
                             onPress={() => {                                 
-                                pickImage("library");
+                                //pickImage("library");
+                                setTimeout(async function(){  await pickImage("library"); }, 100);
                                 setModalVisible(false); 
                             }} 
                             >
