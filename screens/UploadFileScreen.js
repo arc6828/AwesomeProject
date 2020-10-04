@@ -18,7 +18,12 @@ export default function UploadFileScreen({ navigation }) {
             const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
             if (status !== 'granted') {
                 console.log('Sorry, we need camera roll permissions to make this work!');
-            }             
+            }         
+
+            const { status2 } = await ImagePicker.requestCameraPermissionsAsync();
+            if (status2 !== 'granted') {
+                console.log('Sorry, we need camera permissions to make this work!');
+            }    
         })();
         
     },[]);  
@@ -165,7 +170,13 @@ export default function UploadFileScreen({ navigation }) {
             </TouchableOpacity>            
             <View style={{ alignItems : 'center'}}>
                 <Text>{ image ? image.filename : "" }</Text>
-                <Image source={{uri: url }} style={{width: 100, height: 100}} resizeMode="cover" />
+                {(() => { 
+                    if(url != null){
+                        return (
+                            <Image source={{uri: url }} style={{width: 100, height: 100}} resizeMode="cover" />
+                        );
+                    }                    
+                })() }
             </View>
             <View style={{ marginHorizontal : 10 ,marginTop : 100}}>
                 <Button title="Save in Todo" onPress={onCreate}  />
