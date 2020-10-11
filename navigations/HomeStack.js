@@ -4,6 +4,7 @@ import BmiScreen from '../screens/BmiScreen';
 import NetworkScreen from '../screens/NetworkScreen';
 import HomeScreen from '../screens/HomeScreen';
 import UploadFileScreen from '../screens/UploadFileScreen';
+import ChartScreen from '../screens/ChartScreen';
 
 import MidtermFirstScreen from '../screens/MidtermFirstScreen';
 
@@ -41,6 +42,12 @@ export default function HomeStack() {
                 name="UploadFileScreen" 
                 component={UploadFileScreen} 
                 options={{ title: 'Upload File' }} 
+                />
+
+            <Stack.Screen 
+                name="ChartScreen" 
+                component={ChartScreen} 
+                options={{ title: 'Chart' }} 
                 />
             
         </Stack.Navigator>

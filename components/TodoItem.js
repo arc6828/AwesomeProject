@@ -46,7 +46,7 @@ export default function TodoItem(props) {
                     let images = [
                         {
                             // Simplest usage.
-                            url: props.item.title,
+                            url: props.item.image_url,
                         
                             // width: number
                             // height: number

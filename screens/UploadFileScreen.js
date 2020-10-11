@@ -15,12 +15,13 @@ export default function UploadFileScreen({ route, navigation }) {
 
     useEffect(() => {        
         YellowBox.ignoreWarnings(['Setting a timer']);
-
-        const { todo_id , todo_title, todo_image_url } = route.params;
-        set_id(todo_id);
-        setTitle(todo_title);
-        setUrl(todo_image_url);
-        
+        console.log(route.params);
+        if(route.params){
+            const { todo_id , todo_title, todo_image_url } = route.params;
+            set_id(todo_id);
+            setTitle(todo_title);
+            setUrl(todo_image_url);
+        }
         (async () => {             
             const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
             if (status !== 'granted') {
