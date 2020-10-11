@@ -35,7 +35,8 @@ export default function TodoItem(props) {
                     value={props.item.title}
                     // autoCorrect={false}
                     // autoCapitalize="none"
-                />                  
+                /> 
+
                 
             </View>
             <TouchableOpacity                
@@ -59,12 +60,21 @@ export default function TodoItem(props) {
                     props.setModalVisible(true);
                 }}
                 >
-                <Image source={{ uri : props.item.title }} style={{width: 40, height: 40}} resizeMode="cover" />
+                <Image source={{ uri : props.item.image_url }} style={{width: 40, height: 40}} resizeMode="cover" />
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => props.onDelete(props.item._id)}
                 style={{  flex : 1 }} >
                 <Ionicons name="md-trash" size={23} />
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => props.navigation.navigate('UploadFileScreen', { 
+                    todo_id : props.item._id , 
+                    todo_title : props.item.title ,  
+                    todo_image_url : props.item.image_url ,  
+                }) }
+                style={{  flex : 1 }} >
+                <Ionicons name="md-build" size={23} />
             </TouchableOpacity>
         </View>
      

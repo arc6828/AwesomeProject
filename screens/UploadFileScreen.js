@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, YellowBox, Modal, TouchableOpacity , Image, Button } from 'react-native';
+import { View, Text, YellowBox, Modal, TouchableOpacity , Image, Button,TextInput } from 'react-native';
 import { fb } from '../db_config';
 import { AuthContext, AuthContextProvider } from "../hooks/AuthContext";
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function UploadFileScreen({ navigation }) {  
+export default function UploadFileScreen({ route, navigation }) {  
+    const [_id, set_id] = useState('_' + Math.random().toString(36).substr(2, 9));
+    const [title, setTitle] = useState("");
     const [user, setUser] = useContext(AuthContext);
     const [image, setImage] = useState(null);
     const [url, setUrl] = useState(null);
@@ -13,6 +15,11 @@ export default function UploadFileScreen({ navigation }) {
 
     useEffect(() => {        
         YellowBox.ignoreWarnings(['Setting a timer']);
+
+        const { todo_id , todo_title, todo_image_url } = route.params;
+        set_id(todo_id);
+        setTitle(todo_title);
+        setUrl(todo_image_url);
         
         (async () => {             
             const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -25,6 +32,8 @@ export default function UploadFileScreen({ navigation }) {
                 console.log('Sorry, we need camera permissions to make this work!');
             }    
         })();
+
+
         
     },[]);  
 
@@ -83,8 +92,9 @@ export default function UploadFileScreen({ navigation }) {
 
     const onCreate = () => {
         let new_data = {
-            _id : '_' + Math.random().toString(36).substr(2, 9), //RANDOM NUMBER
-            title : url, //Empty String
+            //_id : '_' + Math.random().toString(36).substr(2, 9), //RANDOM NUMBER
+            _id : _id, //RANDOM NUMBER
+            title : title, //Empty String
             completed : false,
             user_id : user.uid, 
             image_url : url, 
@@ -178,6 +188,17 @@ export default function UploadFileScreen({ navigation }) {
                     }                    
                 })() }
             </View>
+            <TextInput
+                    placeholder="What's in your mind? "
+                    // autoFocus
+                    // underLineColorAndroid="transparent"
+                    // underlineColor="transparent"
+                    // blurOnSubmit
+                    onChangeText={(new_title) => setTitle(new_title) }
+                    value={title}
+                    // autoCorrect={false}
+                    // autoCapitalize="none"
+                />      
             <View style={{ marginHorizontal : 10 ,marginTop : 100}}>
                 <Button title="Save in Todo" onPress={onCreate}  />
             </View>
