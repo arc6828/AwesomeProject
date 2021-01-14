@@ -7,8 +7,8 @@ export default function Item(props) {
     return (
         
         <View style={{ flexDirection : 'row' }}>
-            {/*
-            <Image 
+            
+            {/* <Image 
                 source={{ uri : "https://facebook.github.io/react/logo-og.png" }}
                 style={{width: 40, height: 40, marginRight : 10}} 
                 />
@@ -17,8 +17,7 @@ export default function Item(props) {
                 <Text style={{ fontSize : 14, flexWrap : 'wrap', paddingRight : 40 }}>
                     Course to program mobile application in cross platform
                 </Text>
-            </View>
-            */}
+            </View> */}
             
             <Image 
                 source={{ uri : props.image }}
